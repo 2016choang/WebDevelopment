@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Research 2015-2016</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../css/landing-page.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+        function profileChange() {
+            var jmckidley = {
+                n: "John McKidley",
+                desc: "Josh McKidley is a 21-year-old male patient who was monitored for 2 hours while watching the Disney movie, <i>Fantasia</i>, and did not experience an arrhythmia episode.",
+                m: ["0.996","1.022", "0.072", "0.025", "0.067", "0.052", "0.317", "0.005", "0.001", "0.002", "0.002", "0.001", "1.874", "137.042", "2.096"],
+                c: "Healthy",
+                score: "0.974"
+            };
+            var snickson = {
+                n: "Riley Nickson",
+                desc: "Riley Nickson is a 27-year-old female patient who was monitored for 10 days and suffered episodes of ventricular tachycardia and fibrillation.",
+                m: ["0.999", "0.439", "0.025", "0.000", "0.025","0.032", "0.021", "0.000", "0.000", "0.000","0.000", "0.000", "9,381", "0.210", "0.699"],
+                c: "Unhealthy",
+                score: "-2.113"
+            };
+            var profile = null;
+            if(document.getElementById("profile").value == "0"){
+                profile = jmckidley;
+            }
+            else {
+                profile = snickson;
+            }
+            document.getElementById("name").innerHTML = profile["n"];
+            document.getElementById("desc").innerHTML = profile["desc"];
+            document.getElementById("record").innerHTML = profile["n"];
+            var record = document.getElementById("record");
+            for (i = 0; i < profile["m"].length; i++) {
+                record.nextElementSibling.innerHTML = profile.m[i];
+                record = record.nextElementSibling;
+            }
+            document.getElementById("pred").innerHTML = "Class: " + profile["c"];
+            document.getElementById("score").innerHTML = "Class score: " + profile["score"];
+        }
+
+        function runCalc() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var results = xmlhttp.responseText;
+                    console.log(results);
+                }
+            }
+            xmlhttp.open("GET","calculations.php?x=", true);
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="../">Christopher Hoang</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href ="#description">Description</a>
+                    </li>
+                    <li>
+                        <a href="#demo">Demo</a>
+                    </li>
+                    <li>
+                        <a href="#paper">Documents</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <a name="description"></a>
+    <div class="content-section-a">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Project Overview</h2>
+                    <p class="lead">This project investigated the use of support vector machine (SVM) models to predict the short-term risk of suffering an arrhythmia episode by differentiating between healthy and at-risk patients given samples of the patients' electrocardiogram (ECG) signal. From each patient's ECG signal sample, the metrics to the right were calculated. These metrics show the differences between ECG siganl samples and quantify differences between consecutive heartbeats. Using the calculated metrics, the SVM models were trained using half of the data given the status of the patient depending on whether they would later suffer an arrhythmia episode. Finally, the SVM models were tested on the other half of patients, classifying a patient ECG signal sample as either healthy or at-risk. The strongest performing model had a success rate of 92.12% for 165 patients. </p>
+                </div>
+                <div class = "col-lg-5 col-lg-offset-2 col-sm-6">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <img class="img-responsive" src="./metrics.JPG" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+    <div class="content-section-a">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Patient Data</h2>
+                    <p class="lead">The patient data used in this study was retrieved from PhysioBank, a free medical database in the PhysioNet repository containing deidentified data from various hospitals and studies. The patient ECG data was taken from six different databases as shown to the left. Another set of patients from the Apnea-ECG database is currently being added to the model.</p>
+                    <a href="http://physionet.org/physiobank/" class="btn btn-default btn-lg"><i class="fa fa-database fa-fw"></i> <span class="network-name">PhysioBank</span></a>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <img class="img-responsive" src="./database.JPG" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <a  name="demo"></a>
+    <div class="content-section-a">
+        <br>
+        </br>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Patient Profiles</h2>
+                    <p class="lead">
+                        Explore various patient profiles, their variability calculations, and their final predictions.
+                    </p>
+                    <div class ="form-group">
+                        <label for="sel1">Select a patient profile to begin.</label>
+                        <select class="form-control" onchange="profileChange()" id="profile">
+                            <option value="0">Josh McKidley</option>
+                            <option value ="1">Riley Nickson</option>
+                        </select>
+                    </div>
+                    <div = class="panel panel-default">
+                        <div class = "panel-heading">
+                            <h3 class = "section-heading" id="name">Josh McKidley</h3>
+                        </div>
+                        <div class = "panel-body">
+                            <p class="lead" id="desc"> 
+                                Josh McKidley is a 21-year-old male patient who was monitored for 2 hours while watching the Disney movie, <i>Fantasia</i>, and did not experience an arrhythmia episode.
+                            </p>
+                        </div>
+                    </div>
+                    <h2 class="section-heading">Prediction Demo</h2>
+                    <p class="lead">Train the support vector machine classifier and predict the short-term risk of suffering an arrhythmia risk of a chosen patient.</p>
+                    <p class ="lead">Upload text files of an ECG signal record and its identified heartbeat annotations to begin. 
+                    </p> 
+                    <form action ="upload.php" method="post" enctype="multipart/form-data">
+                            ECG signal:
+                            <input type="file" name="fileToUpload" class="btn btn-default btn-file" accept = ".txt"/>
+                            Heartbeat annotation:
+                            <input type="file" name="fileToUpload2" class="btn btn-default btn-file" accept = ".txt"/>
+                            <input type="submit" name="submit" class ="btn btn-default" value="Upload"/>
+                            <button onclick="runCalc()" class="btn btn-default" type="button">Calculate</button>
+                    </form>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <br>
+                    <br>
+                    <img class="img-responsive" src="./exsignal.jpg" alt="">
+                </div>
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <div class = "panel panel-default">
+                        <div class = "panel-heading">
+                            <h2 class="section-heading" id="prediction">Final Prediction</h2>
+                        </div>
+                        <div class = "panel-body">
+                            <h3 class="lead" id="pred">Class: Healthy</h3>
+                            <h3 class="lead" id="score">Class score: 0.974</h3>
+                        </div>
+                    </div>
+                    <p class="lead">The calculated metrics used to classify the inputted ECG signal record are shown below:</p>
+                </div>
+                    <table class = "table">
+                        <thead class = "thead-inverse">
+                            <tr>
+                                <th>Name</th>
+                                <th>NN/RR</th>
+                                <th>AVNN</th>
+                                <th>SDNN</th>
+                                <th>SDANN</th>
+                                <th>SDNNINDX</th>
+                                <th>rMSSD</th>
+                                <th>PNN50</th>
+                                <th>TOTPWR</th>
+                                <th>ULF</th>
+                                <th>VLF</th>
+                                <th>LF</th>
+                                <th>HF</th>
+                                <th>LF/HF</th>
+                                <th>MV</th>
+                                <th>MV-LF/HF</th>                             
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="metrics">
+                                <th scope = "row" id="record">Josh McKidley</th>
+                                <td id="nnrr">0.996</td>
+                                <td id="avnn">1.022</td>
+                                <td id="sdnn">0.072</td>
+                                <td id="sdann">0.025</td>
+                                <td id="sdnnindx">0.067</td>
+                                <td id="rmssd">0.052</td>
+                                <td id="pnn50">0.317</td>
+                                <td id="totpwr">0.005</td>
+                                <td id="ulf">0.001</td>
+                                <td id="vlf">0.002</td>
+                                <td id="lf">0.002</td>
+                                <td id="hf">0.001</td>
+                                <td id="lfhf">1.874</td>
+                                <td id="mv">137.042</td>
+                                <td id="mvlfhf">2.096</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Constructed Model</h2>
+                    <p class="lead">Sequential forward feature selection was applied to the feature vector, which is comprised of the original data used in the study and any additional user-inputted ECG data. The results of the feature selection are displayed to the left. Metrics in green were included in the final feature subset while those in red were excluded from the model. The performance of the support vector machine model is shown by the measures below: </p>
+                    <div class = "panel panel-default">
+                        <div class = "panel-heading">
+                            <h2 class="section-heading">Performance Measures</h2>
+                        </div>
+                        <div class = "panel-body">
+                            <h3 class="lead">Classification Accuracy: 92.12%<br>Area Under Curve: 0.952</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div>
+                    <h3 class= "display-5">Time-Domain Metrics</h3>
+                    <a href="#" class="btn btn-danger btn-lg disabled" role="button">NN/RR</a>
+                    <a href="#" class="btn btn-success btn-lg disabled" role="button">AVNN</a>
+                    <a href="#" class="btn btn-success btn-lg disabled" role="button">SDNN</a>
+                    <a href="#" class="btn btn-danger btn-lg disabled" role="button">SDANN</a>
+                    <a href="#" class="btn btn-danger btn-lg disabled" role="button">SDNNIDX</a>
+                    <a href="#" class="btn btn-success btn-lg disabled" role="button">rMSSD</a>
+                    <a href="#" class="btn btn-danger btn-lg disabled" role="button">PNN50</a>
+                    </div>
+                    <div>
+                    <h3 class= "display-5">Frequency-Domain Metrics</h3>
+                    <a href="#" class="btn btn-danger btn-lg disabled" role="button">TOTPWR</a>
+                    <a href="#" class="btn btn-danger btn-lg disabled" role="button">ULF</a>
+                    <a href="#" class="btn btn-danger btn-lg disabled" role="button">VLF</a>
+                    <a href="#" class="btn btn-danger btn-lg disabled" role="button">LF</a>
+                    <a href="#" class="btn btn-danger btn-lg disabled" role="button">HF</a>
+                    <a href="#" class="btn btn-success btn-lg disabled" role="button">LF/HF</a>
+                    </div>
+                    <div>
+                    <h3 class= "display-5">Morphological Variability Metrics</h3>
+                    <a href="#" class="btn btn-success btn-lg disabled" role="button">MV</a>
+                    <a href="#" class="btn btn-success btn-lg disabled" role="button">MV-LF/HF</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+    <!-- Page Content -->
+
+<!--    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Google Web Fonts and<br>Font Awesome Icons</h2>
+                    <p class="lead">This template features the 'Lato' font, part of the <a target="_blank" href="http://www.google.com/fonts">Google Web Font library</a>, as well as <a target="_blank" href="http://fontawesome.io">icons from Font Awesome</a>.</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive" src="img/phones.png" alt="">
+                </div>
+            </div>
+
+        </div>
+
+    </div>-->
+    <!-- /.container -->
+    <!-- /.content-section-a -->
+
+    <a  name="paper"></a>
+    <div class="content-section-a">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Documents</h2>
+                    <p class="lead">In September, this project was submitted to the 2015 Siemens Competition in Math, Science, & Technology as a research paper and was recognized as a Semi-Finalist. In January, the paper was also submitted to Teknos 2016: The Journal for Science, Mathematics, and Technology. Click the buttons below to view the research paper, project acknowledgements, and a summary of the research process and experience. </p> 
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <a href="#" class="btn btn-default btn-lg"><i class="fa fa-file-text fa-fw"></i> <span class="network-name">Paper</span></a>
+                    <br>
+                    <a href="#" class="btn btn-default btn-lg"><i class="fa fa-pencil fa-fw"></i> <span class="network-name">Acknowledgements</span></a>
+                    <br>
+                    <a href="#" class="btn btn-default btn-lg"><i class="fa fa-search fa-fw"></i> <span class="network-name">My Experience</span></a>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#description">Description</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#demo">Demo</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#paper">Paper</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; Christopher Hoang 2016. Produced by Start Bootstrap.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

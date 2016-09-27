@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			Scrabble Word Finder
+		</title>
+		<style>
+			.center {
+				text-align: center;
+				text-shadow: 0px 1px 1px #4d4d4d;
+				color: #222;
+				font: 'LeagueGothicRegular';
+				font-size: 80px;
+			}
+
+			#suggestions {
+				text-shadow: 0px 1px 1px #4d4d4d;
+				color: #222;
+				font: 'LeagueGothicRegular';
+				font-size: 20px;
+			}
+
+			 body {
+			 	background-color: #8c8c8c;
+			 }
+		</style>
+		<script>
+			var createSpan;
+			function checkInput() {
+				var regex = document.getElementById("change").value;
+				var inputVal = document.getElementById("letters").value;
+				if(regex == "substring"){
+					var re = /^([A-z]*)$/;
+					if(re.test(inputVal)) {
+						generateWords();
+					}
+					else {
+						document.getElementById("letters").placeholder = "Please enter letters";
+						document.getElementById("letters").value = "";
+					}
+				}
+				if(regex == "first"){
+					var re = /^([A-z]{1})$/;
+					if(re.test(inputVal)) {
+						generateWords();
+					}
+					else {
+						document.getElementById("letters").placeholder = "Please enter one letter";
+						document.getElementById("letters").value = "";
+					}					
+				}
+				if(regex == "last"){
+					var re = /^([A-z]{1})$/;
+					if(re.test(inputVal)) {
+						generateWords();
+					}
+					else {
+						document.getElementById("letters").placeholder = "Please enter one letter";
+						document.getElementById("letters").value = "";
+					}		
+				}
+				if(regex == "number"){
+					var re = /^([0-9]*)$/;
+					if(re.test(inputVal)) {
+						generateWords();
+					}
+					else {
+						document.getElementById("letters").placeholder = "Please enter digits";
+						document.getElementById("letters").value = "";
+					}		
+				}
+			}
+			function generateWords() {
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						var words = xmlhttp.responseText;
+						writeWords(words);
+					}
+				}
+				var regexType = 0;
+				var regex = document.getElementById("change").value;
+				if(regex == "substring"){
+					regexType = 1;
+				}
+				if(regex == "first"){
+					regexType = 2;
+				}
+				if(regex == "last"){
+					regexType = 3;
+				}
+				if(regex == "number"){
+					regexType = 4;
+				}
+				xmlhttp.open("GET", "search.php?l=" + document.getElementById("letters").value + regexType ,true);
+				xmlhttp.send();
+			}
+			function writeWords(text) {
+				clearInterval(createSpan);
+				var words = text.split(" ");
+				var i = 0;
+				var current = document.getElementById("suggestions");
+				while(current.firstChild) {
+					current.removeChild(current.firstChild);
+				}
+				createSpan = setInterval(function() {
+					var span = document.createElement("span");
+					span.innerHTML = words[i] + " ";
+					current.appendChild(span);
+					i = i + 1;
+					if( i == words.length) {
+						clearInterval(createSpan);
+					}					
+				}, 10);
+			}
+		</script>
+	</head>
+	<body>
+		<h1 class = "center">
+			Scrabble Word Finder 
+		</h1>
+		<select id = "change">
+			<option value = "substring">Substring</option>
+			<option value = "first">First Letter</option>
+			<option value = "last">Last Letter</option>
+			<option value = "number">Number of Letters</option>
+		</select>
+		<input type = "text" autofocus placeholder = "" id = "letters" required>
+		<button onclick = "checkInput()" type="button">Submit</button>
+		<div>
+			Possible words from inputted substring:
+		</div>
+		<div id = "suggestions">
+		</div>
+	</body>
+</html>

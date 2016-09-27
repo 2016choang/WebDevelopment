@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style type = "text/css">
+			h1{
+				font-size: 250%;
+				color: #009933;
+				text-shadow: 2px 2px #33CC33;
+				font-family: serif;
+				font-weight: bold;
+
+			}
+			.center{
+				text-align: center;
+			}
+			form{
+				font-size: 150%;
+				color: #4DB870;
+				font-family: verdana;
+			}
+			body {
+				background-image: url("https://wallpaperscraft.com/image/naruto_shippuden_naruto_kakashi_hatake_jounin_ninja_war_97126_1920x1080.jpg");
+			}
+			input {
+				background-image:url(images/form_bg.jpg);
+				background-repeat:repeat-x;
+				border:1px solid #d1c7ac;
+				width: 230px;
+				color:#333333;
+				padding:3px;
+				margin-right:4px;
+				margin-bottom:8px;
+				font-family:tahoma, arial, sans-serif;
+			}
+			#radio {
+				color:4DB870;
+				font-family: verdana;
+			}
+			#rasenganlink {
+				position: fixed;
+				bottom: 0;
+				right: 0;
+			}
+		</style>
+		<script>
+			function validate() {
+				var validation = true;
+				document.getElementById("username").style.backgroundColor = "#FFFFFF";
+				document.getElementById("address").style.backgroundColor = "#FFFFFF";
+				document.getElementById("city").style.backgroundColor = "#FFFFFF";
+				document.getElementById("state").style.backgroundColor = "#FFFFFF";
+				document.getElementById("zipcode").style.backgroundColor = "#FFFFFF";
+				document.getElementById("email").style.backgroundColor = "#FFFFFF";
+				document.getElementById("date").style.backgroundColor = "#FFFFFF";
+				var un = document.getElementById("username").value;
+				var usernamecheck = /[A-z]+/;
+				if(usernamecheck.test(un) == false && un != "") {
+					document.getElementById("username").style.backgroundColor = "#00FF00";
+					validation = false;
+				}
+
+				var addy = document.getElementById("address").value;
+				var addycheck = /[0-9A-z]+/;
+				if(addycheck.test(addy) == false && addy != "") {
+					document.getElementById("address").style.backgroundColor = "#00FF00";
+					validation = false;
+				}
+
+				var city = document.getElementById("city").value;
+				var citycheck = /([A-z]+)/;
+				if(citycheck.test(city) == false && city != "") {
+					document.getElementById("city").style.backgroundColor = "#00FF00";
+					validation = false;
+				}
+
+				var state = document.getElementById("state").value;
+				var statecheck = /([A-z]+)/;
+				if(statecheck.test(state) == false && state != "") {
+					document.getElementById("state").style.backgroundColor = "#00FF00";
+					validation =  false;
+				}
+
+				var zc = document.getElementById("zipcode").value;
+				var zccheck = /^([0-9]{5})$/;
+				if(zccheck.test(zc) == false && zc != "") {
+					document.getElementById("zipcode").style.backgroundColor = "#00FF00";
+					validation = false;
+				}
+
+				var e = document.getElementById("email").value;
+				var echeck = /^(.+@[0-9A-z]+\.[0-9A-z]+)$/;
+				if(echeck.test(e) == false && e != "") {
+					document.getElementById("email").style.backgroundColor = "#00FF00";
+					validation = false;
+				}
+				
+				return validation;
+			}
+
+			function changeSelect() {
+				var sel = document.getElementById("jutsu");
+				var fire = {
+					t: ["Great Fireball Technique", "Amaterasu", "Phoenix Sage Flower Nail Crimson", "Great Dragon Fire Technique", "Toad Oil Flame Bullet"],
+					v: ["fireball", "amaterasu", "phoenix", "firedragon", "toadoil"],
+				};
+				var water = {
+					t: ["Water Prison Technique", "Water Dragon Bullet Technique", "A Thousand Feeding Sharks"],
+					v: ["prison", "waterdragon", "sharks"],
+				};
+				var lightning = {
+					t: ["Lariat", "Chidori", "Laser Circus"],
+					v: ["lariat", "chidori", "lasers"],
+				};
+				var earth = {
+					t: ["Earth-Style Wall", "Earth Spear", "Great Moving Earth Core", "Golem Technique"],
+					v: ["wall", "spear", "core", "golem"],
+				};
+				var wind = {
+					t: ["Rasenshuriken", "Air Bullets", "Vacuum Sphere", "Wind Cutter"],
+					v: ["rasenshuriken", "bullets", "sphere", "cutter"],
+				};
+				var usedOptions = null;
+				if(document.getElementById("natures").value == "fire") {
+					usedOptions = fire;
+				}
+				else if(document.getElementById("natures").value == "water"){
+					usedOptions = water;
+				}
+				else if(document.getElementById("natures").value == "lightning"){
+					usedOptions = lightning;
+				}
+				else if(document.getElementById("natures").value == "earth"){
+					usedOptions = earth;
+				}
+				else {
+					usedOptions = wind;
+				}
+				sel.options.length = 0;
+				for (i=0; i < usedOptions.t.length; i++) {
+					sel.options[sel.options.length] = new Option(usedOptions.t[i], usedOptions.v[i]);
+				};
+				sel.options.length = usedOptions.t.length;
+				if(document.getElementById("listview").checked) {
+					var length = document.getElementById("jutsu").options.length;
+					document.getElementById("jutsu").setAttribute("size", length);
+				}
+			}
+
+			function dropDownView() {
+				document.getElementById("natures").setAttribute("size", "1");
+				document.getElementById("jutsu").setAttribute("size", "1");
+			}
+			function listView() {
+				document.getElementById("natures").setAttribute("size", document.getElementById("natures").length);
+				var length = document.getElementById("jutsu").options.length;
+				document.getElementById("jutsu").setAttribute("size", length);
+
+			}
+		</script>
+		<title>
+			Naruto Survey
+		</title>
+	</head>
+	<body>
+		<h1 class = "center">
+			Hokage Survey!
+		</h1>
+
+		<form action = "saveData.php" method = "post" autocomplete= "on">
+			Username: 
+			<input type="text" autofocus placeholder = "Naruto" name = "username" id="username" oninput = "return validate()" required>
+			<br>
+			Address: 
+			<input type="text" placeholder = "123 Rasengan Lane" name = "address" id="address" oninput = "return validate()" required>
+			<br>
+			City: 
+			<input type="text" placeholder = "Hidden Leaf Village" name = "city" id="city" oninput = "return validate()" required>
+			<br>
+			State: 
+			<input type="text" placeholder = "Land of Fire" name = "state" id="state" oninput = "return validate()" required>
+			<br>
+			Zip Code: 
+			<input type="text" placeholder = "#####" name = "zipcode" id="zipcode" oninput = "return validate()" required>
+			<br>
+			E-mail: 
+			<input type="text" placeholder = "2016nuzumaki@academy.edu" name = "email" id="email" oninput = "return validate()" required>
+			<br>
+			Today's Date: 
+			<input type="date" placeholder = "##-##-##" name = "date" id="date" required>
+			<br>	
+			<input type="radio" name="view" value="1" onclick="dropDownView()" checked> Byakugan 
+			<input type="radio" name="view" id="listview" value="2" onclick="listView()"> Rinnegan
+			<br>
+			<div id="radio">
+				Nature Transformation
+			</div>
+			<select onchange="changeSelect()" name = "natures" id="natures" required>
+				<option value="fire">Fire Release</option> 
+				<option value="water">Water Release</option> 
+				<option value="lightning">Lightning Release</option> 
+				<option value="earth">Earth Release</option> 
+				<option value="wind">Wind Release</option> 
+			</select>
+			<br>
+			<div id="radio"> 
+				Jutsu
+			</div>
+			<select name = "jutsu" id="jutsu" required> 
+				<option value="fireball">Great Fireball Technique</option>
+				<option value="amaterasu">Amaterasu</option>
+				<option value="phoenix">Phoenix Sage Flower Nail Crimson</option>
+				<option value="firedragon">Great Dragon Fire Technique</option>
+				<option value="toadoil">Toad Oil Flame Bullet</option>
+			</select>
+			<br>
+			<div id="comments">
+				Additional attributes (optional):
+				<br>
+			</div>
+			<textarea name = "comments" rows="7" cols="50">
+			</textarea>
+			<br>
+			<input type="submit" value = "Submit">
+		</form>
+		<br>
+
+		<div id = "rasenganlink">
+			<a href="https://www.tjhsst.edu/~2016choang/">
+				<img src="http://orig02.deviantart.net/8557/f/2009/300/0/7/rasengan_50x50_by_hessmix.gif" alt="Rasengan!" width = "50" height = "50" border = "0">
+			</a>
+		</div>
+	</body>
+</html>
